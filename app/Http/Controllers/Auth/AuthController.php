@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Auth\LoginUserRequest;
 use App\Http\Requests\Auth\RegisterUserRequest;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
@@ -26,8 +27,17 @@ class AuthController extends Controller
 
         Auth::login($user);
 
-        return to_route('chat.index', [
-            'user' => $user,
-        ]);
+        return to_route('chat.index');
+    }
+
+    public function login(LoginUserRequest $request)
+    {
+        if (Auth::attempt($request->validated())) {
+            $request->session()->regenerate();
+
+            return to_route('chat.index');
+        }
+
+        return back()->withErrors(['username' => 'Provided credentials do not match our records']);
     }
 }
