@@ -9,7 +9,11 @@
         "skipLibCheck": true,
         "esModuleInterop": true,
         "allowImportingTsExtensions": true,
-        "types": ["vite/client"]
+        "types": ["vite/client"],
+        "baseUrl": ".",
+        "paths": {
+            "@/*": ["./resources/js/*"]
+        }
     },
     "include": [
         "resources/js/**/*.ts",
