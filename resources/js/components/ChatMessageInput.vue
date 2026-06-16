@@ -1,14 +1,12 @@
 <template>
-    <div class="flex items-end gap-2 border-t border-border p-3">
+    <div class="flex items-center gap-2 border-t border-border p-3">
         <Textarea
             v-model="message"
             placeholder="type a message..."
             class="min-h-10 flex-1 resize-none"
             :rows="1"
         />
-        <Button variant="default" size="sm" @click="send">
-            send
-        </Button>
+        <Button variant="default" size="sm" @click="send"> send </Button>
     </div>
 </template>
 
