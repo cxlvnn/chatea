@@ -38,13 +38,13 @@ const username = ref("");
                 </DialogDescription>
             </DialogHeader>
 
-            <Form>
+            <Form action="/chats/create" method="post" v-slot="{ errors }">
                 <FieldGroup>
                     <Field>
                         <FieldLabel for="username"> Username </FieldLabel>
                         <Input
                             id="username"
-                            v-model="username"
+                            name="username"
                             type="text"
                             placeholder="johndoe"
                         />
@@ -53,11 +53,11 @@ const username = ref("");
                         </FieldDescription>
                     </Field>
                 </FieldGroup>
-            </Form>
 
-            <DialogFooter>
-                <Button type="submit"> Start chatting </Button>
-            </DialogFooter>
+                <DialogFooter>
+                    <Button type="submit"> Start chatting </Button>
+                </DialogFooter>
+            </Form>
         </DialogContent>
     </Dialog>
 </template>

@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth')->group(function () {
     Route::get('/chats', [ChatController::class, 'index'])->name('chat.index');
+    Route::post('/chats/create', [ChatController::class, 'create'])->name('chat.create');
 });
 
 Route::get('/login', [AuthController::class, 'show_login'])->name('login.show');

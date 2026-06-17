@@ -1,6 +1,6 @@
 <template>
-    <AppSidebar />
-    <ChatWindow />
+    <AppSidebar :chats />
+    <ChatWindow :chat />
 </template>
 
 <script setup lang="ts">
@@ -10,5 +10,10 @@ import ChatWindow from "@/components/ChatWindow.vue";
 
 defineOptions({
     layout: ChatLayout,
+});
+
+defineProps({
+    chat: Object,
+    chats: Object,
 });
 </script>

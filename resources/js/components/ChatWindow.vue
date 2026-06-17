@@ -10,4 +10,8 @@
 import ChatHeader from "./ChatHeader.vue";
 import ChatMessageInput from "./ChatMessageInput.vue";
 import ChatMessages from "./ChatMessages.vue";
+
+defineProps({
+    chat: Object,
+});
 </script>
