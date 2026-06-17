@@ -1,5 +1,5 @@
 <template>
-    <Button variant="ghost" size="icon-xs" @click="toggle">
+    <Button variant="outline" size="icon-xs" @click="toggle">
         <HugeiconsIcon
             :icon="isDark ? Moon01Icon : Sun01Icon"
             :size="16"
