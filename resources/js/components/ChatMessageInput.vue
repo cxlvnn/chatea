@@ -6,7 +6,14 @@
             class="min-h-10 flex-1 resize-none"
             :rows="1"
         />
-        <Button variant="default" size="sm" @click="send"> send </Button>
+        <Button
+            :disabled="message === ''"
+            variant="default"
+            size="sm"
+            @click="send"
+        >
+            send
+        </Button>
     </div>
 </template>
 
