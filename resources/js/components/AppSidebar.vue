@@ -16,11 +16,8 @@
                 >
                     log out
                 </Link>
-                <Link href="/chats/create">
-                    <Button variant="outline" size="icon-xs">
-                        <IconPlus />
-                    </Button>
-                </Link>
+
+                <ChatAddDialog />
                 <ThemeToggle />
             </div>
         </div>
@@ -36,6 +33,5 @@
 import ChatList from "@/components/ChatList.vue";
 import ThemeToggle from "@/components/ThemeToggle.vue";
 import { Link } from "@inertiajs/vue3";
-import IconPlus from "./IconPlus.vue";
-import Button from "./ui/button/Button.vue";
+import ChatAddDialog from "./ChatAddDialog.vue";
 </script>
