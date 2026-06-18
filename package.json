@@ -18,6 +18,7 @@
     "dependencies": {
         "@hugeicons/core-free-icons": "^4.2.0",
         "@hugeicons/vue": "^1.0.6",
+        "@inertiajs/core": "^3.4.0",
         "@inertiajs/vite": "^3.4.0",
         "@inertiajs/vue3": "^3.4.0",
         "@vitejs/plugin-vue": "^6.0.7",

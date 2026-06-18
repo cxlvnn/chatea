@@ -31,11 +31,11 @@ class User extends Authenticatable
 
     public function chats(): HasMany
     {
-        return $this->hasMany(Chat::class, 'user_1');
+        return $this->hasMany(Chat::class, 'user1_id')->orWhere('user2_id', $this->id);
     }
 
     public function messages(): HasMany
     {
-        return $this->hasMany(Message::class, 'message_from');
+        return $this->hasMany(Message::class);
     }
 }

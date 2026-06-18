@@ -1,6 +1,6 @@
 <template>
     <div class="flex h-full flex-1 flex-col">
-        <ChatHeader />
+        <ChatHeader :username="chat?.username" />
         <ChatMessages />
         <ChatMessageInput />
     </div>
@@ -11,7 +11,9 @@ import ChatHeader from "./ChatHeader.vue";
 import ChatMessageInput from "./ChatMessageInput.vue";
 import ChatMessages from "./ChatMessages.vue";
 
-defineProps({
+const props = defineProps({
     chat: Object,
 });
+
+const chat = props.chat?.data;
 </script>

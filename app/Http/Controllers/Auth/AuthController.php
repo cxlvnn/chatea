@@ -51,7 +51,7 @@ class AuthController extends Controller
 
     public function profile()
     {
-        return Inertia::render('Profile', ['user' => Auth::user()]);
+        return Inertia::render('auth/Profile', ['user' => Auth::user()]);
     }
 
     public function update_profile(UpdateProfileRequest $request)

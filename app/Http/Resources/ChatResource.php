@@ -14,10 +14,14 @@ class ChatResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        // this whole thing is a mess
         return [
             'id' => $this->id,
-            'username' => $this->user_two,
+            'username' => $this->user_2->username,
+            'initial' => $this->user_2->username[0],
+
+            /* 'relationships' => [ */
+            /*     'lastMessage' => $this->last_message(), */
+            /* ], */
         ];
     }
 }

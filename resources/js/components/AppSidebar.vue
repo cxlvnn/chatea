@@ -25,7 +25,10 @@
 <script setup lang="ts">
 import ChatList from "@/components/ChatList.vue";
 import ThemeToggle from "@/components/ThemeToggle.vue";
-import { Link } from "@inertiajs/vue3";
 import ChatAddDialog from "./ChatAddDialog.vue";
 import AppProfileButton from "./AppProfileButton.vue";
+
+defineProps({
+    chats: Object,
+});
 </script>

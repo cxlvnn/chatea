@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\AddNewChatRequest;
+use App\Http\Resources\ChatResource;
 use App\Models\Chat;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
@@ -12,22 +13,24 @@ class ChatController extends Controller
 {
     public function index()
     {
-        $chats = Auth::user()->chats;
-
-        return Inertia::render('Chat', ['chats' => $chats]);
+        return Inertia::render('chat/Index');
     }
 
     public function show(Chat $chat)
     {
-        return Inertia::render('Chat', ['chat' => $chat]);
+        return Inertia::render('chat/Show', ['chat' => new ChatResource($chat)]);
     }
 
     public function create(AddNewChatRequest $request)
     {
         if ($user = User::firstWhere('username', $request->validated('username'))) {
+            if ($request->username === Auth::user()->username) {
+                return back()->withErrors(['username' => 'Can not create a chat with yourself']);
+            }
+
             $chat = Chat::create([
-                'user_1' => Auth::user()->id,
-                'user_2' => $user->id,
+                'user1_id' => Auth::user()->id,
+                'user2_id' => $user->id,
             ]);
 
             return to_route('chat.index');
