@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginUserRequest;
 use App\Http\Requests\Auth\RegisterUserRequest;
+use App\Http\Requests\UpdateProfileRequest;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
@@ -51,5 +52,14 @@ class AuthController extends Controller
     public function profile()
     {
         return Inertia::render('Profile', ['user' => Auth::user()]);
+    }
+
+    public function update_profile(UpdateProfileRequest $request)
+    {
+        $user = Auth::user();
+
+        $user->update($request->validated());
+
+        return to_route('profile');
     }
 }

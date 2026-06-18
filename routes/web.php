@@ -13,6 +13,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/chats/create', [ChatController::class, 'create'])->name('chat.create');
 
     Route::get('/profile', [AuthController::class, 'profile'])->name('profile');
+    Route::put('/profile', [AuthController::class, 'update_profile'])->name('profile.update');
 });
 
 Route::middleware('guest')->group(function () {
