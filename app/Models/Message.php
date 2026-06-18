@@ -14,7 +14,7 @@ class Message extends Model
 
     protected $guarded = [];
 
-    public function owner(): BelongsTo
+    public function sender(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }

@@ -42,7 +42,7 @@ class AuthController extends Controller
         return back()->withErrors(['username' => 'Provided credentials do not match our records']);
     }
 
-    public function destroy()
+    public function logout()
     {
         Auth::logout();
 

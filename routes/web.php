@@ -23,4 +23,4 @@ Route::middleware('guest')->group(function () {
     Route::get('/register', [AuthController::class, 'show_register'])->name('register.show');
     Route::post('/register', [AuthController::class, 'register'])->name('register');
 });
-Route::post('/logout', [AuthController::class, 'destroy'])->name('logout')->middleware('auth');
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout')->middleware('auth');

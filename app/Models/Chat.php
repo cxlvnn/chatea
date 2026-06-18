@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Support\Facades\Auth;
 
 class Chat extends Model
 {
@@ -34,5 +35,10 @@ class Chat extends Model
     public function user_2(): BelongsTo
     {
         return $this->belongsTo(User::class, 'user2_id');
+    }
+
+    public function other_user(): User
+    {
+        return $this->user1_id === Auth::id() ? $this->user_2 : $this->user_1;
     }
 }
