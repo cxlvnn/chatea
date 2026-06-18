@@ -9,14 +9,6 @@
                 chatea
             </span>
             <div class="flex flex-row items-center gap-2">
-                <Link
-                    class="text-[10px] border px-1"
-                    href="/logout"
-                    method="post"
-                >
-                    log out
-                </Link>
-
                 <ChatAddDialog />
                 <ThemeToggle />
                 <AppProfileButton />

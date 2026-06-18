@@ -17,6 +17,11 @@ class ChatController extends Controller
         return Inertia::render('Chat', ['chats' => $chats]);
     }
 
+    public function show(Chat $chat)
+    {
+        return Inertia::render('Chat', ['chat' => $chat]);
+    }
+
     public function create(AddNewChatRequest $request)
     {
         if ($user = User::firstWhere('username', $request->validated('username'))) {

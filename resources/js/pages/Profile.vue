@@ -38,6 +38,15 @@
                 </FieldSet>
             </Form>
         </div>
+        <div class="my-2 flex gap-2">
+            <Link
+                class="text-[10px] bg-secondary/50 border p-1"
+                href="/logout"
+                method="post"
+            >
+                Log out
+            </Link>
+        </div>
     </div>
 </template>
 
