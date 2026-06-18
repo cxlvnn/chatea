@@ -1,29 +1,29 @@
 <template>
     <div class="flex w-full flex-col">
         <ItemGroup>
-            <template v-for="(person, index) in people" :key="person.username">
+            <template v-for="chat in chats" :key="chats?.id">
                 <Item
-                    :variant="activeIndex === index ? 'outline' : 'default'"
+                    :variant="activeIndex === chat.id ? 'outline' : 'default'"
                     size="default"
                     class="cursor-pointer"
-                    @click="activeIndex = index"
+                    @click="activeIndex = chat.id"
                 >
                     <ItemMedia variant="icon" class="mx-1">
                         <span class="text-xs font-bold uppercase">{{
-                            person.initial
+                            chat.initial
                         }}</span>
                     </ItemMedia>
                     <ItemContent class="gap-0.5">
                         <ItemTitle class="text-foreground">{{
-                            person.username
+                            chat.username
                         }}</ItemTitle>
                         <ItemDescription>{{
-                            person.lastMessage
+                            chat.lastMessage
                         }}</ItemDescription>
                     </ItemContent>
                     <ItemActions>
                         <span class="text-[10px] text-muted-foreground">{{
-                            person.time
+                            chat.last_message_at
                         }}</span>
                     </ItemActions>
                 </Item>
@@ -46,24 +46,7 @@ import {
 
 const activeIndex = ref(0);
 
-const people = [
-    {
-        username: "wife",
-        initial: "w",
-        lastMessage: "see you",
-        time: "18:46",
-    },
-    {
-        username: "brother",
-        initial: "b",
-        lastMessage: "check out this link",
-        time: "16:20",
-    },
-    {
-        username: "mom",
-        initial: "m",
-        lastMessage: "call me when you're free",
-        time: "14:05",
-    },
-];
+defineProps({
+    chats: Object,
+});
 </script>

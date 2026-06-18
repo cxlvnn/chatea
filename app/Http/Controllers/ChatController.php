@@ -25,7 +25,7 @@ class ChatController extends Controller
                 'user_2' => $user->id,
             ]);
 
-            return Inertia::render('Chat', ['chat' => $chat]);
+            return to_route('chat.index');
         }
 
         return back()->withErrors(['username' => 'This username does not exist']);

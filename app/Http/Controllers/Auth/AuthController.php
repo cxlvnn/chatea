@@ -47,4 +47,9 @@ class AuthController extends Controller
 
         return redirect()->route('login');
     }
+
+    public function profile()
+    {
+        return Inertia::render('Profile', ['user' => Auth::user()]);
+    }
 }

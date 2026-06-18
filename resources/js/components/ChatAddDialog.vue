@@ -13,14 +13,13 @@ import {
 import {
     Field,
     FieldDescription,
+    FieldError,
     FieldGroup,
     FieldLabel,
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import IconPlus from "./IconPlus.vue";
 import { Form } from "@inertiajs/vue3";
-
-const username = ref("");
 </script>
 
 <template>
@@ -38,7 +37,11 @@ const username = ref("");
                 </DialogDescription>
             </DialogHeader>
 
-            <Form action="/chats/create" method="post" v-slot="{ errors }">
+            <Form
+                action="/chats/create"
+                method="post"
+                v-slot="{ errors, processing }"
+            >
                 <FieldGroup>
                     <Field>
                         <FieldLabel for="username"> Username </FieldLabel>
@@ -48,6 +51,9 @@ const username = ref("");
                             type="text"
                             placeholder="johndoe"
                         />
+                        <FieldError v-if="errors.username">
+                            {{ errors.username }}
+                        </FieldError>
                         <FieldDescription>
                             Type the username of a friend.
                         </FieldDescription>
@@ -55,7 +61,9 @@ const username = ref("");
                 </FieldGroup>
 
                 <DialogFooter>
-                    <Button type="submit"> Start chatting </Button>
+                    <Button :disabled="processing" type="submit">
+                        Start chatting
+                    </Button>
                 </DialogFooter>
             </Form>
         </DialogContent>

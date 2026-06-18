@@ -11,6 +11,8 @@ Route::get('/', function () {
 Route::middleware('auth')->group(function () {
     Route::get('/chats', [ChatController::class, 'index'])->name('chat.index');
     Route::post('/chats/create', [ChatController::class, 'create'])->name('chat.create');
+
+    Route::get('/profile', [AuthController::class, 'profile'])->name('profile');
 });
 
 Route::middleware('guest')->group(function () {
