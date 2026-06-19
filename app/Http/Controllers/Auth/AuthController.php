@@ -28,7 +28,7 @@ class AuthController extends Controller
 
         Auth::login($user);
 
-        return to_route('chat.index');
+        return to_route('chats.index');
     }
 
     public function login(LoginUserRequest $request)
@@ -36,7 +36,7 @@ class AuthController extends Controller
         if (Auth::attempt($request->validated())) {
             $request->session()->regenerate();
 
-            return to_route('chat.index');
+            return to_route('chats.index');
         }
 
         return back()->withErrors(['username' => 'Provided credentials do not match our records']);

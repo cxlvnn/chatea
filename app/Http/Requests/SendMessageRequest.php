@@ -12,7 +12,7 @@ class SendMessageRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -23,7 +23,14 @@ class SendMessageRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'content' => ['required', 'string', 'max:2000'],
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'content' => 'Provide a message to send',
         ];
     }
 }

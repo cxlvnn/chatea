@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\SendMessageRequest;
+use App\Models\Chat;
 use App\Models\Message;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class MessageController extends Controller
 {
@@ -16,19 +19,16 @@ class MessageController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(SendMessageRequest $request, Chat $chat)
     {
-        //
+        $chat->messages()->create([
+            'user_id' => Auth::id(),
+            'content' => $request->validated('content'),
+        ]);
+
+        return to_route('chats.show', ['chat' => $chat]);
     }
 
     /**

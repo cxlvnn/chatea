@@ -12,6 +12,5 @@ defineOptions({
 
 defineProps({
     chat: Object,
-    messages: Object,
 });
 </script>

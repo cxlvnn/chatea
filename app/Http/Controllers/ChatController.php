@@ -18,7 +18,9 @@ class ChatController extends Controller
 
     public function show(Chat $chat)
     {
-        return Inertia::render('chat/Show', ['chat' => new ChatResource($chat)]);
+        return Inertia::render('chat/Show', [
+            'chat' => new ChatResource($chat),
+        ]);
     }
 
     public function create(AddNewChatRequest $request)
@@ -33,7 +35,7 @@ class ChatController extends Controller
                 'user2_id' => $user->id,
             ]);
 
-            return to_route('chat.index');
+            return to_route('chats.index');
         }
 
         return back()->withErrors(['username' => 'This username does not exist']);

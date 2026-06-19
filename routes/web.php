@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\ChatController;
+use App\Http\Controllers\MessageController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -9,9 +10,10 @@ Route::get('/', function () {
 });
 
 Route::middleware('auth')->group(function () {
-    Route::get('/chats', [ChatController::class, 'index'])->name('chat.index');
-    Route::get('/chats/{chat}', [ChatController::class, 'show'])->name('chat.show');
-    Route::post('/chats/create', [ChatController::class, 'create'])->name('chat.create');
+    Route::get('/chats', [ChatController::class, 'index'])->name('chats.index');
+    Route::get('/chats/{chat}', [ChatController::class, 'show'])->name('chats.show');
+    Route::post('/chats/create', [ChatController::class, 'create'])->name('chats.create');
+    Route::post('/chats/{chat}/messages', [MessageController::class, 'store']);
 
     Route::get('/profile', [AuthController::class, 'profile'])->name('profile');
     Route::put('/profile', [AuthController::class, 'update_profile'])->name('profile.update');

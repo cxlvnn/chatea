@@ -2,7 +2,7 @@
 
 namespace App\Http\Middleware;
 
-use App\Http\Resources\ChatResource;
+use App\Http\Resources\ChatsResource;
 use App\Models\Chat;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -40,7 +40,7 @@ class HandleInertiaRequests extends Middleware
     {
         return [
             ...parent::share($request),
-            'chats' => ChatResource::collection(Chat::query()
+            'chats' => ChatsResource::collection(Chat::query()
                 ->where('user1_id', Auth::id())
                 ->orWhere('user2_id', Auth::id())
                 ->with(['user_1', 'user_2'])
