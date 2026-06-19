@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\EditMessageRequest;
 use App\Http\Requests\SendMessageRequest;
 use App\Models\Chat;
 use App\Models\Message;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class MessageController extends Controller
@@ -50,9 +50,11 @@ class MessageController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Message $message)
+    public function update(EditMessageRequest $request, Message $message)
     {
-        //
+        $message->update($request->validated());
+
+        return redirect()->back();
     }
 
     /**
