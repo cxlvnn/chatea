@@ -8,11 +8,10 @@
                 {{ form.errors.content }}
             </div>
             <div class="flex items-center gap-2">
-                <Textarea
+                <Input
                     v-model="form.content"
                     placeholder="type a message..."
                     class="min-h-10 flex-1 resize-none"
-                    :rows="1"
                 />
                 <Button
                     :disabled="form.processing || !form.content?.trim()"
@@ -27,9 +26,9 @@
 </template>
 
 <script setup lang="ts">
-import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { useForm, usePage } from "@inertiajs/vue3";
+import Input from "./ui/input/Input.vue";
 
 const page = usePage();
 

@@ -40,6 +40,7 @@ import { Form } from "@inertiajs/vue3";
                 action="/chats/create"
                 method="post"
                 v-slot="{ errors, processing }"
+                reset-on-success
             >
                 <FieldGroup>
                     <Field>

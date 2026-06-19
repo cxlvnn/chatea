@@ -35,9 +35,16 @@ class ChatController extends Controller
                 'user2_id' => $user->id,
             ]);
 
-            return to_route('chats.index');
+            return to_route('chats.show', ['chat' => $chat]);
         }
 
         return back()->withErrors(['username' => 'This username does not exist']);
+    }
+
+    public function destroy(Chat $chat)
+    {
+        $chat->deleteOrFail();
+
+        return to_route('chats.index');
     }
 }

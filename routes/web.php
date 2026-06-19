@@ -6,13 +6,14 @@ use App\Http\Controllers\MessageController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return to_route('chat.index');
+    return to_route('chats.index');
 });
 
 Route::middleware('auth')->group(function () {
     Route::get('/chats', [ChatController::class, 'index'])->name('chats.index');
     Route::get('/chats/{chat}', [ChatController::class, 'show'])->name('chats.show');
     Route::post('/chats/create', [ChatController::class, 'create'])->name('chats.create');
+    Route::delete('/chats/{chat}', [ChatController::class, 'destroy'])->name('chats.destroy');
     Route::post('/chats/{chat}/messages', [MessageController::class, 'store']);
 
     Route::get('/profile', [AuthController::class, 'profile'])->name('profile');
