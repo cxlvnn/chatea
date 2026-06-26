@@ -9,6 +9,7 @@
             >
                 <div class="group relative max-w-[75%]">
                     <div
+                        v-if="!editing"
                         class="px-3 py-2 text-xs leading-relaxed"
                         :class="
                             msg.sent
@@ -18,14 +19,13 @@
                     >
                         {{ msg.content }}
                     </div>
-                    <Link
+                    <Button
                         v-if="msg.sent"
-                        :href="`${$page.url}/messages/${msg.id}`"
-                        method="put"
-                        class="absolute -top-2 -right-2 flex size-7 items-center justify-center rounded-full border border-border bg-popover shadow-sm opacity-0 transition-opacity group-hover:opacity-100"
+                        @click="updateId(msg.id)"
+                        class="absolute -top-4 -right-2 flex size-7 items-center justify-center rounded border border-border bg-popover shadow-sm opacity-0 transition-opacity group-hover:opacity-100"
                     >
                         <IconEdit class="size-3.5 text-muted-foreground" />
-                    </Link>
+                    </Button>
                 </div>
                 <span class="my-2 px-1 text-[11px] text-muted-foreground">{{
                     msg.time
@@ -36,9 +36,19 @@
 </template>
 
 <script setup lang="ts">
-import { Link } from "@inertiajs/vue3";
+import { Form, Link, useHttp, usePage } from "@inertiajs/vue3";
 import IconEdit from "./IconEdit.vue";
+import Button from "./ui/button/Button.vue";
+import { ref } from "vue";
 const props = defineProps({
     messages: Array,
 });
+
+const editingId = ref(0);
+const editing = ref(false);
+
+const updateId = (msgId) => {
+    editing.value = true;
+    editingId.value = msgId;
+};
 </script>

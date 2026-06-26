@@ -52,7 +52,9 @@ class MessageController extends Controller
      */
     public function update(EditMessageRequest $request, Message $message)
     {
-        $message->update($request->validated());
+        $message
+            ->where('user_id', Auth::id())
+            ->update($request->validated());
 
         return redirect()->back();
     }

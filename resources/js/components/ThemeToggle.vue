@@ -1,7 +1,7 @@
 <template>
     <Button variant="outline" size="icon-xs" @click="toggle">
         <HugeiconsIcon
-            :icon="isDark ? Moon01Icon : Sun01Icon"
+            :icon="isDark ? Moon02Icon : Sun01Icon"
             :size="16"
             :stroke-width="1.5"
         />
@@ -11,7 +11,7 @@
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
 import { useLocalStorage } from "@vueuse/core";
-import { Moon01Icon, Sun01Icon } from "@hugeicons/core-free-icons";
+import { Moon02Icon, Sun01Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/vue";
 import { Button } from "@/components/ui/button";
 
