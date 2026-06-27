@@ -9,7 +9,7 @@
             >
                 <div class="group relative max-w-[75%]">
                     <div
-                        v-if="!editing"
+                        v-if="editingId != msg.id"
                         class="px-3 py-2 text-xs leading-relaxed"
                         :class="
                             msg.sent
@@ -19,13 +19,29 @@
                     >
                         {{ msg.content }}
                     </div>
-                    <Button
-                        v-if="msg.sent"
-                        @click="updateId(msg.id)"
-                        class="absolute -top-4 -right-2 flex size-7 items-center justify-center rounded border border-border bg-popover shadow-sm opacity-0 transition-opacity group-hover:opacity-100"
-                    >
-                        <IconEdit class="size-3.5 text-muted-foreground" />
-                    </Button>
+                    <div v-else="editingId == msg.id">
+                        <Form
+                            :action="`${$page.url}/messages/${parseInt(msg.id)}`"
+                            method="patch"
+                        >
+                            <Input
+                                class="mb-2"
+                                type="text"
+                                :defaultValue="msg.content"
+                                name="content"
+                            />
+                            <Button>Edit</Button>
+                        </Form>
+                    </div>
+                    <div v-if="editingId != msg.id">
+                        <Button
+                            v-if="msg.sent"
+                            @click="updateId(msg.id)"
+                            class="absolute -top-4 -right-2 flex size-7 items-center justify-center rounded border border-border bg-popover shadow-sm opacity-0 transition-opacity group-hover:opacity-100"
+                        >
+                            <IconEdit class="size-3.5 text-muted-foreground" />
+                        </Button>
+                    </div>
                 </div>
                 <span class="my-2 px-1 text-[11px] text-muted-foreground">{{
                     msg.time
@@ -40,15 +56,14 @@ import { Form, Link, useHttp, usePage } from "@inertiajs/vue3";
 import IconEdit from "./IconEdit.vue";
 import Button from "./ui/button/Button.vue";
 import { ref } from "vue";
+import Input from "./ui/input/Input.vue";
 const props = defineProps({
     messages: Array,
 });
 
 const editingId = ref(0);
-const editing = ref(false);
 
-const updateId = (msgId) => {
-    editing.value = true;
+const updateId = (msgId: number) => {
     editingId.value = msgId;
 };
 </script>

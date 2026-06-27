@@ -44,6 +44,7 @@ class HandleInertiaRequests extends Middleware
                 ->where('user1_id', Auth::id())
                 ->orWhere('user2_id', Auth::id())
                 ->with(['user_1', 'user_2'])
+                ->latest('updated_at')
                 ->get()),
         ];
     }

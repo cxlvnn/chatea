@@ -50,11 +50,11 @@ class MessageController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(EditMessageRequest $request, Message $message)
+    public function update(EditMessageRequest $request, Chat $chat, Message $message)
     {
-        $message
-            ->where('user_id', Auth::id())
-            ->update($request->validated());
+        if ($message->user_id === Auth::id()) {
+            $message->update($request->validated());
+        }
 
         return redirect()->back();
     }
