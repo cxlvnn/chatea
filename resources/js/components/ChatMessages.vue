@@ -76,23 +76,25 @@
 </template>
 
 <script setup lang="ts">
-import { Form, useHttp, usePage } from "@inertiajs/vue3";
+import { Form, useHttp } from "@inertiajs/vue3";
 import IconEdit from "./IconEdit.vue";
 import Button from "./ui/button/Button.vue";
 import { ref } from "vue";
 import Input from "./ui/input/Input.vue";
 import IconDelete from "./IconDelete.vue";
 
-defineProps({
-    messages: Array,
-});
+defineProps<{
+    messages: {
+        id: number;
+        content: string;
+        time: string;
+        sent: boolean;
+    }[];
+}>();
 
 const http = useHttp();
-const page = usePage();
 
 const sendDelete = (msgId: number) => {
-    console.log(page.url);
-    console.log(`${page.url}/messages/${msgId}`);
     if (window.confirm("Are you sure you want to delete this message")) {
         http.delete(`/messages/${msgId}`);
     }

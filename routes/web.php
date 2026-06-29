@@ -15,7 +15,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/chats/create', [ChatController::class, 'create'])->name('chats.create');
 
     Route::post('/chats/{chat}/messages', [MessageController::class, 'store']);
-    Route::patch('/chats/{chat}/messages/{message}', [MessageController::class, 'update']);
+    Route::patch('/messages/{message}', [MessageController::class, 'update']);
 
     Route::delete('/messages/{message}', [MessageController::class, 'destroy']);
     Route::delete('/chats/{chat}', [ChatController::class, 'destroy'])->name('chats.destroy');

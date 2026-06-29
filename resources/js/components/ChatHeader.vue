@@ -15,7 +15,7 @@
 </template>
 
 <script setup lang="ts">
-import { Link, useHttp, usePage } from "@inertiajs/vue3";
+import { useHttp, usePage } from "@inertiajs/vue3";
 import IconDelete from "./IconDelete.vue";
 import Button from "./ui/button/Button.vue";
 
