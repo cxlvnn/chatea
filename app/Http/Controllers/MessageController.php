@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\MessageSent;
 use App\Http\Requests\EditMessageRequest;
 use App\Http\Requests\SendMessageRequest;
 use App\Models\Chat;
@@ -23,10 +24,12 @@ class MessageController extends Controller
      */
     public function store(SendMessageRequest $request, Chat $chat)
     {
-        $chat->messages()->create([
+        $message = $chat->messages()->create([
             'user_id' => Auth::id(),
             'content' => $request->validated('content'),
         ]);
+
+        broadcast(new MessageSent($message));
 
         return to_route('chats.show', ['chat' => $chat]);
     }
@@ -34,7 +37,7 @@ class MessageController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(EditMessageRequest $request, Chat $chat, Message $message)
+    public function update(EditMessageRequest $request, Message $message)
     {
         if ($message->user_id === Auth::id()) {
             $message->update($request->validated());
