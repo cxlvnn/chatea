@@ -32,22 +32,6 @@ class MessageController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     */
-    public function show(Message $message)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Message $message)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      */
     public function update(EditMessageRequest $request, Chat $chat, Message $message)
@@ -64,6 +48,8 @@ class MessageController extends Controller
      */
     public function destroy(Message $message)
     {
-        //
+        if ($message->user_id === Auth::id()) {
+            $message->delete();
+        }
     }
 }

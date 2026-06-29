@@ -21,7 +21,7 @@
                     </div>
                     <div v-else>
                         <Form
-                            :action="`${$page.url}/messages/${msg.id}`"
+                            :action="`/messages/${msg.id}`"
                             method="patch"
                             disable-while-processing
                             @success="editingId = 0"
@@ -47,13 +47,23 @@
                             </div>
                         </Form>
                     </div>
-                    <div v-if="editingId != msg.id">
+                    <div
+                        v-if="editingId != msg.id && msg.sent"
+                        class="absolute -top-6 right-0 flex gap-1 opacity-0 transition-opacity group-hover:opacity-100"
+                    >
                         <Button
-                            v-if="msg.sent"
                             @click="editingId = msg.id"
-                            class="absolute -top-4 -right-2 flex size-7 items-center justify-center rounded border border-border bg-popover shadow-sm opacity-0 transition-opacity group-hover:opacity-100"
+                            size="icon-xs"
+                            variant="outline"
                         >
-                            <IconEdit class="size-3.5 text-muted-foreground" />
+                            <IconEdit />
+                        </Button>
+                        <Button
+                            @click="sendDelete(msg.id)"
+                            size="icon-xs"
+                            variant="outline"
+                        >
+                            <IconDelete />
                         </Button>
                     </div>
                 </div>
@@ -66,15 +76,27 @@
 </template>
 
 <script setup lang="ts">
-import { Form, usePage } from "@inertiajs/vue3";
+import { Form, useHttp, usePage } from "@inertiajs/vue3";
 import IconEdit from "./IconEdit.vue";
 import Button from "./ui/button/Button.vue";
 import { ref } from "vue";
 import Input from "./ui/input/Input.vue";
+import IconDelete from "./IconDelete.vue";
 
 defineProps({
     messages: Array,
 });
+
+const http = useHttp();
+const page = usePage();
+
+const sendDelete = (msgId: number) => {
+    console.log(page.url);
+    console.log(`${page.url}/messages/${msgId}`);
+    if (window.confirm("Are you sure you want to delete this message")) {
+        http.delete(`/messages/${msgId}`);
+    }
+};
 
 const editingId = ref(0);
 </script>

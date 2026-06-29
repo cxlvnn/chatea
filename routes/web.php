@@ -13,9 +13,12 @@ Route::middleware('auth')->group(function () {
     Route::get('/chats', [ChatController::class, 'index'])->name('chats.index');
     Route::get('/chats/{chat}', [ChatController::class, 'show'])->name('chats.show');
     Route::post('/chats/create', [ChatController::class, 'create'])->name('chats.create');
-    Route::delete('/chats/{chat}', [ChatController::class, 'destroy'])->name('chats.destroy');
+
     Route::post('/chats/{chat}/messages', [MessageController::class, 'store']);
     Route::patch('/chats/{chat}/messages/{message}', [MessageController::class, 'update']);
+
+    Route::delete('/messages/{message}', [MessageController::class, 'destroy']);
+    Route::delete('/chats/{chat}', [ChatController::class, 'destroy'])->name('chats.destroy');
 
     Route::get('/profile', [AuthController::class, 'profile'])->name('profile');
     Route::put('/profile', [AuthController::class, 'update_profile'])->name('profile.update');
