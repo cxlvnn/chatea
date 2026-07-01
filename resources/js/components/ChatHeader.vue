@@ -8,27 +8,21 @@
             }}</span>
             <span class="text-[10px] text-muted-foreground">online</span>
         </div>
-        <Button @click="deleteChat()" variant="outline" size="icon-sm">
-            <IconDelete />
-        </Button>
+        <Link :href="`/chats/${chatId}`" method="delete">
+            <Button variant="outline" size="icon-sm">
+                <IconDelete />
+            </Button>
+        </Link>
     </div>
 </template>
 
 <script setup lang="ts">
-import { useHttp, usePage } from "@inertiajs/vue3";
+import { Link } from "@inertiajs/vue3";
 import IconDelete from "./IconDelete.vue";
 import Button from "./ui/button/Button.vue";
 
 const props = defineProps({
     username: String,
+    chatId: Number,
 });
-
-const http = useHttp();
-const page = usePage();
-
-const deleteChat = () => {
-    if (window.confirm("Are you sure you want to delete this chat?")) {
-        http.delete(page.url);
-    }
-};
 </script>

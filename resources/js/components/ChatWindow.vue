@@ -1,6 +1,6 @@
 <template>
     <div class="flex h-full flex-1 flex-col">
-        <ChatHeader :username="chat?.data.username" />
+        <ChatHeader :username="chat?.data.username" :chatId="chat?.data.id" />
         <ChatMessages :messages="chat?.data.relationships.messages" />
         <ChatMessageInput />
     </div>
