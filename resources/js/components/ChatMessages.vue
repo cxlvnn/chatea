@@ -82,11 +82,6 @@ import Button from "./ui/button/Button.vue";
 import { ref } from "vue";
 import Input from "./ui/input/Input.vue";
 import IconDelete from "./IconDelete.vue";
-import { useEchoPresence } from "@laravel/echo-vue";
-
-useEchoPresence("message", "MessageSent", (e) => {
-    console.log(e);
-});
 
 const props = defineProps<{
     messages: {

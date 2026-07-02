@@ -9,6 +9,7 @@ use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcastNow;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Auth;
 
 class MessageSent implements ShouldBroadcastNow
 {
@@ -30,7 +31,24 @@ class MessageSent implements ShouldBroadcastNow
     public function broadcastOn(): array
     {
         return [
-            new PrivateChannel('message'.$this->message->id),
+            new PrivateChannel('chat.'.$this->message->chat_id),
         ];
+    }
+
+    public function broadcastWith(): array
+    {
+        return [
+            'message' => [
+                'id' => $this->message->id,
+                'content' => $this->message->content,
+                'time' => $this->message->created_at->format('H:i'),
+                'sent' => $this->message->sender_id === Auth::id(),
+            ],
+        ];
+    }
+
+    public function broadcastAs()
+    {
+        return 'message.sent';
     }
 }
