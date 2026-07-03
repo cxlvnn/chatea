@@ -30,8 +30,22 @@ class ChatController extends Controller
                 return back()->withErrors(['username' => 'Can not create a chat with yourself']);
             }
 
+            $auth_id = Auth::id();
+            $user_id = $user->id;
+
+            if (Chat::query()
+                ->where(function ($query) use ($auth_id, $user_id) {
+                    $query->where('user1_id', $auth_id)
+                        ->where('user2_id', $user_id);
+                })->orWhere(function ($query) use ($auth_id, $user_id) {
+                    $query->where('user1_id', $user_id)
+                        ->where('user2_id', $auth_id);
+                })->exists()) {
+                return back()->withErrors(['username' => 'Chat already exists']);
+            }
+
             $chat = Chat::create([
-                'user1_id' => Auth::user()->id,
+                'user1_id' => Auth::id(),
                 'user2_id' => $user->id,
             ]);
 

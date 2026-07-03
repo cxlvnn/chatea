@@ -27,17 +27,19 @@
 
 <script setup lang="ts">
 import { Button } from "@/components/ui/button";
-import { useForm, usePage } from "@inertiajs/vue3";
+import { useForm } from "@inertiajs/vue3";
 import Input from "./ui/input/Input.vue";
 
-const page = usePage();
+const props = defineProps({
+    chatId: null,
+});
 
 const form = useForm({
     content: "",
 });
 
 const sendForm = () => {
-    form.post(`${page.url}/messages`);
+    form.post(`/chats/${props.chatId}/messages`, {});
     form.reset();
 };
 </script>
