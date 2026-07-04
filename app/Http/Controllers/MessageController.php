@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\MessageDeleted;
 use App\Events\MessageSent;
 use App\Http\Requests\EditMessageRequest;
 use App\Http\Requests\SendMessageRequest;
@@ -52,6 +53,7 @@ class MessageController extends Controller
     public function destroy(Message $message)
     {
         if ($message->user_id === Auth::id()) {
+            broadcast(new MessageDeleted($message));
             $message->delete();
         }
     }

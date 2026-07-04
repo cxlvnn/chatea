@@ -82,6 +82,7 @@ import Button from "./ui/button/Button.vue";
 import { ref } from "vue";
 import Input from "./ui/input/Input.vue";
 import IconDelete from "./IconDelete.vue";
+import { useEcho } from "@laravel/echo-vue";
 
 const props = defineProps<{
     messages: {
@@ -90,7 +91,22 @@ const props = defineProps<{
         time: string;
         sent: boolean;
     }[];
+    chatId: number;
 }>();
+
+useEcho(`chat.${props.chatId}`, ".message.sent", (e) => {
+    props.messages.push(e.message);
+});
+
+useEcho(`chat.${props.chatId}`, ".message.deleted", (e) => {
+    const index = props.messages.findIndex(
+        (message) => message.id === e.message.id,
+    );
+
+    if (index > -1) {
+        props.messages.splice(index, 1);
+    }
+});
 
 const http = useHttp();
 

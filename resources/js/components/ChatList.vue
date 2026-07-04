@@ -45,9 +45,7 @@
 import { computed, ref } from "vue";
 import {
     Item,
-    ItemActions,
     ItemContent,
-    ItemDescription,
     ItemGroup,
     ItemMedia,
     ItemTitle,
