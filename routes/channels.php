@@ -11,5 +11,5 @@ Broadcast::channel('chat.{chatId}', function (User $user, $chatId) {
 });
 
 Broadcast::channel('user.{userId}', function (User $user, $userId) {
-    return $user->id === $userId;
+    return $user->id == $userId;
 });

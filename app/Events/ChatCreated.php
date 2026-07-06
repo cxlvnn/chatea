@@ -2,6 +2,7 @@
 
 namespace App\Events;
 
+use App\Http\Resources\MessageResource;
 use App\Models\Chat;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
@@ -36,9 +37,17 @@ class ChatCreated implements ShouldBroadcastNow
 
     public function broadcastWith(): array
     {
+        $user = $this->chat->other_user();
+
         return [
             'chat' => [
-                'id' => 12,
+                'id' => $this->chat->id,
+                'username' => $user->username,
+
+                'relationships' => [
+                    'messages' => MessageResource::collection($this->chat->messages()->with('sender')->get()),
+                ],
+
             ],
         ];
     }
