@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\ChatCreated;
 use App\Http\Requests\AddNewChatRequest;
 use App\Http\Resources\ChatResource;
 use App\Models\Chat;
@@ -48,6 +49,8 @@ class ChatController extends Controller
                 'user1_id' => Auth::id(),
                 'user2_id' => $user->id,
             ]);
+
+            broadcast(new ChatCreated($chat, $user->id));
 
             return to_route('chats.show', ['chat' => $chat]);
         }

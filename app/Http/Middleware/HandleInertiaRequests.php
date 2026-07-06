@@ -46,6 +46,10 @@ class HandleInertiaRequests extends Middleware
                 ->with(['user_1', 'user_2'])
                 ->latest('updated_at')
                 ->get()),
+
+            'auth' => [
+                'user' => Auth::user(),
+            ],
         ];
     }
 }
