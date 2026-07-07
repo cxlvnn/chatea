@@ -4,7 +4,6 @@ namespace App\Events;
 
 use App\Http\Resources\MessageResource;
 use App\Models\Chat;
-use App\Models\User;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PrivateChannel;
@@ -39,7 +38,6 @@ class ChatCreated implements ShouldBroadcastNow
 
     public function broadcastWith(): array
     {
-        /* $user = User::findOrFail($this->userId); */
         $other_user = Auth::id() == $this->userId ? $this->chat->other_user() : Auth::user();
 
         return [

@@ -19,10 +19,13 @@ import {
 import { Input } from "@/components/ui/input";
 import IconPlus from "./IconPlus.vue";
 import { Form } from "@inertiajs/vue3";
+import { ref } from "vue";
+
+const dialogueOpen = ref(false);
 </script>
 
 <template>
-    <Dialog>
+    <Dialog v-model:open="dialogueOpen">
         <DialogTrigger as-child>
             <Button variant="outline" size="icon-xs">
                 <IconPlus />
@@ -41,6 +44,7 @@ import { Form } from "@inertiajs/vue3";
                 method="post"
                 v-slot="{ errors, processing }"
                 reset-on-success
+                @success="dialogueOpen = false"
             >
                 <FieldGroup>
                     <Field>
