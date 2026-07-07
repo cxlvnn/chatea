@@ -11,6 +11,7 @@ use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcastNow;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Auth;
 
 class ChatCreated implements ShouldBroadcastNow
 {
@@ -38,13 +39,14 @@ class ChatCreated implements ShouldBroadcastNow
 
     public function broadcastWith(): array
     {
-        $user = User::findOrFail($this->userId);
+        /* $user = User::findOrFail($this->userId); */
+        $other_user = Auth::id() == $this->userId ? $this->chat->other_user() : Auth::user();
 
         return [
             'chat' => [
                 'id' => $this->chat->id,
-                'username' => $user->username,
-                'initial' => $user->username[0],
+                'username' => $other_user->username,
+                'initial' => $other_user->username[0],
 
                 'relationships' => [
                     'messages' => MessageResource::collection($this->chat->messages()->with('sender')->get()),

@@ -3,11 +3,13 @@
         <div
             class="flex h-14 shrink-0 items-center justify-between border-b border-border px-4"
         >
-            <span
-                class="text-sm font-bold tracking-widest text-foreground uppercase"
-            >
-                chatea
-            </span>
+            <Link href="/chats">
+                <span
+                    class="text-sm font-bold tracking-widest text-foreground uppercase"
+                >
+                    chatea
+                </span>
+            </Link>
             <div class="flex flex-row items-center gap-2">
                 <ChatAddDialog />
                 <ThemeToggle />
@@ -27,4 +29,5 @@ import ChatList from "@/components/ChatList.vue";
 import ThemeToggle from "@/components/ThemeToggle.vue";
 import ChatAddDialog from "./ChatAddDialog.vue";
 import AppProfileButton from "./AppProfileButton.vue";
+import { Link } from "@inertiajs/vue3";
 </script>
