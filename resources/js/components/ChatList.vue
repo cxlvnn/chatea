@@ -52,12 +52,24 @@ import {
 } from "@/components/ui/item";
 
 import { Link, usePage } from "@inertiajs/vue3";
+import { useEcho } from "@laravel/echo-vue";
 
 const activeIndex = ref(0);
 
 const page = usePage<{
     chats: { data: Array<{ id: number; username: string; initial: string }> };
+    auth: { user: { id: number; username: string } };
 }>();
 
 const chats = computed(() => page.props.chats.data);
+
+useEcho(`user.${page.props.auth.user.id}`, ".chat.deleted", (e) => {
+    const index = page.props.chats.data.findIndex(
+        (chat) => chat.id === e.chat.id,
+    );
+
+    if (index > -1) {
+        page.props.chats.data.splice(index, 1);
+    }
+});
 </script>

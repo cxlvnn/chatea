@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Events\ChatCreated;
+use App\Events\ChatDeleted;
 use App\Http\Requests\AddNewChatRequest;
 use App\Http\Resources\ChatResource;
 use App\Models\Chat;
@@ -60,6 +61,9 @@ class ChatController extends Controller
 
     public function destroy(Chat $chat)
     {
+        $other_user = $chat->other_user();
+        $userId = $other_user->id;
+        broadcast(new ChatDeleted($chat, $userId));
         $chat->deleteOrFail();
 
         return to_route('chats.index');
