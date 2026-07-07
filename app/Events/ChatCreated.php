@@ -4,6 +4,7 @@ namespace App\Events;
 
 use App\Http\Resources\MessageResource;
 use App\Models\Chat;
+use App\Models\User;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PrivateChannel;
@@ -37,12 +38,13 @@ class ChatCreated implements ShouldBroadcastNow
 
     public function broadcastWith(): array
     {
-        $user = $this->chat->other_user();
+        $user = User::findOrFail($this->userId);
 
         return [
             'chat' => [
                 'id' => $this->chat->id,
                 'username' => $user->username,
+                'initial' => $user->username[0],
 
                 'relationships' => [
                     'messages' => MessageResource::collection($this->chat->messages()->with('sender')->get()),
