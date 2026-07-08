@@ -51,7 +51,7 @@ import {
     ItemTitle,
 } from "@/components/ui/item";
 
-import { Link, usePage } from "@inertiajs/vue3";
+import { Link, router, usePage } from "@inertiajs/vue3";
 import { useEcho } from "@laravel/echo-vue";
 
 const activeIndex = ref(0);
@@ -70,6 +70,7 @@ useEcho(`user.${page.props.auth.user.id}`, ".chat.deleted", (e) => {
 
     if (index > -1) {
         page.props.chats.data.splice(index, 1);
+        router.get("/chats");
     }
 });
 </script>
