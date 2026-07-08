@@ -9,7 +9,6 @@ use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcastNow;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Support\Facades\Auth;
 
 class MessageSent implements ShouldBroadcastNow
 {
@@ -42,7 +41,7 @@ class MessageSent implements ShouldBroadcastNow
                 'id' => $this->message->id,
                 'content' => $this->message->content,
                 'time' => $this->message->created_at->format('H:i'),
-                'sent' => $this->message->sender_id === Auth::id(),
+                'senderId' => $this->message->user_id,
             ],
         ];
     }

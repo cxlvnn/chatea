@@ -30,7 +30,7 @@ class MessageController extends Controller
             'content' => $request->validated('content'),
         ]);
 
-        broadcast(new MessageSent($message));
+        broadcast(new MessageSent($message))->toOthers();
 
         return to_route('chats.show', ['chat' => $chat]);
     }

@@ -76,7 +76,7 @@
 </template>
 
 <script setup lang="ts">
-import { Form, useHttp } from "@inertiajs/vue3";
+import { Form, useHttp, usePage } from "@inertiajs/vue3";
 import IconEdit from "./IconEdit.vue";
 import Button from "./ui/button/Button.vue";
 import { ref } from "vue";
@@ -89,12 +89,20 @@ const props = defineProps<{
         id: number;
         content: string;
         time: string;
+        senderId: number;
         sent: boolean;
     }[];
     chatId: number;
 }>();
 
+const page = usePage<{
+    auth: { user: { id: number; username: string } };
+}>();
+
+const currentUserId = page.props.auth.user.id;
+
 useEcho(`chat.${props.chatId}`, ".message.sent", (e) => {
+    e.message.sent = e.message.senderId === currentUserId;
     props.messages.push(e.message);
 });
 

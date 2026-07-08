@@ -20,6 +20,7 @@ class MessageResource extends JsonResource
             'content' => $this->content,
             'time' => $this->created_at->format('H:i'),
             'sent' => $this->sender->id === Auth::id(),
+            'senderId' => $this->sender->id,
         ];
     }
 }
