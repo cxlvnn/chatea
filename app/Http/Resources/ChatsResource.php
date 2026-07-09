@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Models\Message;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -15,15 +16,20 @@ class ChatsResource extends JsonResource
     public function toArray(Request $request): array
     {
         $user = $this->other_user();
+        $last_message = Message::query()
+            ->where('chat_id', $this->id)
+            ->latest()
+            ->first();
 
         return [
             'id' => $this->id,
             'username' => $user->username,
             'initial' => $user->username[0],
 
-            /* 'relationships' => [ */
-            /*     'lastMessage' => $this->last_message(), */
-            /* ], */
+            'relationships' => [
+                'lastMessage' => $last_message->content,
+                'lastMessageAt' => $last_message->created_at->format('H:i'),
+            ],
         ];
     }
 }

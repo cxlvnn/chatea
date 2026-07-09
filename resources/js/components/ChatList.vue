@@ -22,18 +22,18 @@
                             <ItemTitle class="text-foreground">{{
                                 chat.username
                             }}</ItemTitle>
-                            <!-- <ItemDescription -->
-                            <!--     v-if="chat.relationships?.lastMessage" -->
-                            <!--     >{{ -->
-                            <!--         chat.relationships?.lastMessage -->
-                            <!--     }}</ItemDescription -->
-                            <!-- > -->
+                            <ItemDescription
+                                v-if="chat.relationships.lastMessage"
+                                >{{
+                                    chat.relationships.lastMessage
+                                }}</ItemDescription
+                            >
                         </ItemContent>
-                        <!-- <ItemActions> -->
-                        <!--     <span class="text-[10px] text-muted-foreground">{{ -->
-                        <!--         chat.last_message_at -->
-                        <!--     }}</span> -->
-                        <!-- </ItemActions> -->
+                        <ItemActions>
+                            <span class="text-[10px] text-muted-foreground">{{
+                                chat.relationships.lastMessageAt
+                            }}</span>
+                        </ItemActions>
                     </Item>
                 </Link>
             </template>
@@ -57,7 +57,17 @@ import { useEcho } from "@laravel/echo-vue";
 const activeIndex = ref(0);
 
 const page = usePage<{
-    chats: { data: Array<{ id: number; username: string; initial: string }> };
+    chats: {
+        data: Array<{
+            id: number;
+            username: string;
+            initial: string;
+            relationships: {
+                lastMessage: string;
+                lastMessageAt: string;
+            };
+        }>;
+    };
     auth: { user: { id: number; username: string } };
 }>();
 
