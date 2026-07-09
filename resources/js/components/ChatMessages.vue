@@ -1,5 +1,5 @@
 <template>
-    <div class="flex-1 overflow-y-auto">
+    <div ref="scrollContainer" class="flex-1 overflow-y-auto">
         <div class="flex flex-col gap-1 p-4 pt-6">
             <div
                 v-for="msg in messages"
@@ -71,6 +71,7 @@
                     msg.time
                 }}</span>
             </div>
+            <div ref="bottomSentinel" class="h-0" />
         </div>
     </div>
 </template>
@@ -79,7 +80,7 @@
 import { Form, useHttp, usePage } from "@inertiajs/vue3";
 import IconEdit from "./IconEdit.vue";
 import Button from "./ui/button/Button.vue";
-import { ref } from "vue";
+import { nextTick, onMounted, ref, watch } from "vue";
 import Input from "./ui/input/Input.vue";
 import IconDelete from "./IconDelete.vue";
 import { useEcho } from "@laravel/echo-vue";
@@ -125,4 +126,29 @@ const sendDelete = (msgId: number) => {
 };
 
 const editingId = ref(0);
+
+const scrollContainer = ref<HTMLElement>();
+
+function isNearBottom(): boolean {
+    const elmnt = scrollContainer.value;
+    if (!elmnt) return true;
+    return elmnt.scrollTop + elmnt.clientHeight >= elmnt.scrollHeight - 100;
+}
+
+watch(
+    () => props.messages.length,
+    async () => {
+        await nextTick();
+        const elmnt = scrollContainer.value;
+        if (elmnt && isNearBottom()) {
+            elmnt.scrollTop = elmnt.scrollHeight;
+        }
+    },
+);
+
+onMounted(async () => {
+    await nextTick();
+    scrollContainer.value &&
+        (scrollContainer.value.scrollTop = scrollContainer.value.scrollHeight);
+});
 </script>
