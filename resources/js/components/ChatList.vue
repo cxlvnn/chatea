@@ -49,6 +49,8 @@ import {
     ItemGroup,
     ItemMedia,
     ItemTitle,
+    ItemDescription,
+    ItemActions,
 } from "@/components/ui/item";
 
 import { Link, router, usePage } from "@inertiajs/vue3";
