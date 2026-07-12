@@ -12,6 +12,7 @@
                     v-model="form.content"
                     placeholder="type a message..."
                     class="min-h-10 flex-1 resize-none"
+                    ref="inputRef"
                 />
                 <Button
                     :disabled="form.processing || !form.content?.trim()"
@@ -29,6 +30,13 @@
 import { Button } from "@/components/ui/button";
 import { useForm } from "@inertiajs/vue3";
 import Input from "./ui/input/Input.vue";
+import { onMounted, ref } from "vue";
+
+const inputRef = ref<InstanceType<typeof Input> | null>(null);
+
+onMounted(() => {
+    inputRef.value?.focus();
+});
 
 const props = defineProps({
     chatId: null,
