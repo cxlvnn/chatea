@@ -47,7 +47,8 @@ const form = useForm({
 });
 
 const sendForm = () => {
-    form.post(`/chats/${props.chatId}/messages`, {});
-    form.reset();
+    form.post(`/chats/${props.chatId}/messages`, {
+        onSuccess: () => form.reset(),
+    });
 };
 </script>
