@@ -30,6 +30,10 @@ class MessageController extends Controller
             'content' => $request->validated('content'),
         ]);
 
+        $chat->update([
+            'updated_at' => date('Y-m-d H:i:s'),
+        ]);
+
         broadcast(new MessageSent($message))->toOthers();
 
         return to_route('chats.show', ['chat' => $chat]);
