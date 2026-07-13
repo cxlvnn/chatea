@@ -6,6 +6,8 @@ use App\Models\Message;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
+use function Symfony\Component\Clock\now;
+
 class ChatsResource extends JsonResource
 {
     /**
@@ -15,11 +17,22 @@ class ChatsResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
+
         $user = $this->other_user();
         $last_message = Message::query()
             ->where('chat_id', $this->id)
             ->latest()
             ->first();
+
+        $now = now();
+        $last_message_at = $last_message->created_at;
+        $interval = $now->diff($last_message_at);
+        if ($interval->days > 0) {
+            $last_message_at = $last_message->created_at->format('m/d/y');
+        } else {
+            $last_message_at = $last_message->created_at->format('H:i');
+
+        }
 
         return [
             'id' => $this->id,
@@ -28,7 +41,7 @@ class ChatsResource extends JsonResource
 
             'relationships' => [
                 'lastMessage' => $last_message->content,
-                'lastMessageAt' => $last_message->created_at->format('H:i'),
+                'lastMessageAt' => $last_message_at,
             ],
         ];
     }
