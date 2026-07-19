@@ -10,11 +10,16 @@
 </template>
 
 <script setup lang="ts">
+import { useEchoPresence } from "@laravel/echo-vue";
 import ChatHeader from "./ChatHeader.vue";
 import ChatMessageInput from "./ChatMessageInput.vue";
 import ChatMessages from "./ChatMessages.vue";
 
 const props = defineProps({
     chat: Object,
+});
+
+useEchoPresence(`room.${props.chat?.data.id}`, [], (e) => {
+    console.log(e);
 });
 </script>
