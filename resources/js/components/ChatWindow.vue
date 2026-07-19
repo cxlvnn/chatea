@@ -14,12 +14,21 @@ import { useEchoPresence } from "@laravel/echo-vue";
 import ChatHeader from "./ChatHeader.vue";
 import ChatMessageInput from "./ChatMessageInput.vue";
 import ChatMessages from "./ChatMessages.vue";
+import { onMounted } from "vue";
 
 const props = defineProps({
     chat: Object,
 });
 
-useEchoPresence(`room.${props.chat?.data.id}`, [], (e) => {
-    console.log(e);
+const { channel } = useEchoPresence(
+    `room.${props.chat?.data.id}`,
+    "",
+    () => {},
+);
+
+onMounted(() => {
+    channel().here((users) => {
+        console.log(users);
+    });
 });
 </script>
