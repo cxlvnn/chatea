@@ -9,6 +9,7 @@
 import AppSidebar from "@/components/AppSidebar.vue";
 import { usePage } from "@inertiajs/vue3";
 import { useEcho } from "@laravel/echo-vue";
+import { ref } from "vue";
 
 const props = defineProps<{
     auth: {
@@ -19,10 +20,21 @@ const props = defineProps<{
 }>();
 
 const page = usePage<{
-    chats: { data: Array<{ id: number; username: string; initial: string }> };
+    chats: {
+        data: Array<{
+            id: number;
+            username: string;
+            initial: string;
+            isOnline: boolean;
+        }>;
+    };
 }>();
 
 useEcho(`user.${props.auth.user.id}`, ".chat.created", (e) => {
     page.props.chats.data.push(e.chat);
 });
+
+const onlineUsers = ref(
+    page.props.chats.data.filter((chat) => chat.isOnline === true),
+);
 </script>

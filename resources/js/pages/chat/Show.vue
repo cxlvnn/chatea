@@ -15,6 +15,7 @@ const props = defineProps<{
         data: {
             id: number;
             username: string;
+            isOnline: boolean;
             relationships: [
                 messages: {
                     id: number;
@@ -26,4 +27,6 @@ const props = defineProps<{
         };
     };
 }>();
+
+console.log("from show.vue: ", props.chat);
 </script>

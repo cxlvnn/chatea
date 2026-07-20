@@ -10,6 +10,8 @@ use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 
+use function Symfony\Component\Clock\now;
+
 class AuthController extends Controller
 {
     public function show_register()
@@ -27,6 +29,8 @@ class AuthController extends Controller
         $user = User::create($request->validated());
 
         Auth::login($user);
+        $user->last_seen_at = now();
+        $user->save();
 
         return to_route('chats.index');
     }
@@ -34,7 +38,11 @@ class AuthController extends Controller
     public function login(LoginUserRequest $request)
     {
         if (Auth::attempt($request->validated())) {
+            $user = $request->user();
             $request->session()->regenerate();
+
+            $user->last_seen_at = now();
+            $user->save();
 
             return to_route('chats.index');
         }
@@ -44,7 +52,11 @@ class AuthController extends Controller
 
     public function logout()
     {
+        $user = request()->user();
         Auth::logout();
+
+        $user->last_seen_at = null;
+        $user->save();
 
         return redirect()->route('login');
     }

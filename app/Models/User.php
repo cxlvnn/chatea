@@ -3,6 +3,8 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+
+use Carbon\Carbon;
 use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\Hidden;
@@ -26,6 +28,7 @@ class User extends Authenticatable
     {
         return [
             'password' => 'hashed',
+            'last_seen_at' => 'datetime',
         ];
     }
 
@@ -44,5 +47,13 @@ class User extends Authenticatable
         $chat = Chat::findOrFail($chatId);
 
         return $this->id === $chat->user1_id or $this->id === $chat->user2_id;
+    }
+
+    public function isOnline(): bool
+    {
+        $now = Carbon::now();
+        $cutoff = $now->subSeconds(90);
+
+        return $this->last_seen_at !== null && $this->last_seen_at->greaterThan($cutoff);
     }
 }

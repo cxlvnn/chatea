@@ -6,7 +6,9 @@
             <span class="text-xs font-medium text-foreground">{{
                 username
             }}</span>
-            <span class="text-[10px] text-muted-foreground">online</span>
+            <span class="text-[10px] text-muted-foreground">{{
+                isOnline ? "online" : "offline"
+            }}</span>
         </div>
         <Link :href="`/chats/${chatId}`" method="delete">
             <Button variant="outline" size="icon-sm">
@@ -24,5 +26,6 @@ import Button from "./ui/button/Button.vue";
 const props = defineProps({
     username: String,
     chatId: Number,
+    isOnline: Boolean,
 });
 </script>

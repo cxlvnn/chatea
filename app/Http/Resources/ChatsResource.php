@@ -19,28 +19,31 @@ class ChatsResource extends JsonResource
     {
 
         $user = $this->other_user();
-        $last_message = Message::query()
+        $last_message_at = null;
+        if ($last_message = Message::query()
             ->where('chat_id', $this->id)
             ->latest()
-            ->first();
+            ->first()) {
 
-        $now = now();
-        $last_message_at = $last_message->created_at;
-        $interval = $now->diff($last_message_at);
-        if ($interval->days > 0) {
-            $last_message_at = $last_message->created_at->format('m/d/y');
-        } else {
-            $last_message_at = $last_message->created_at->format('H:i');
+            $now = now();
+            $last_message_at = $last_message->created_at;
+            $interval = $now->diff($last_message_at);
+            if ($interval->days > 0) {
+                $last_message_at = $last_message->created_at->format('m/d/y');
+            } else {
+                $last_message_at = $last_message->created_at->format('H:i');
 
+            }
         }
 
         return [
             'id' => $this->id,
             'username' => $user->username,
             'initial' => $user->username[0],
+            'isOnline' => $user->isOnline(),
 
             'relationships' => [
-                'lastMessage' => $last_message->content,
+                'lastMessage' => $last_message ? $last_message->content : null,
                 'lastMessageAt' => $last_message_at,
             ],
         ];

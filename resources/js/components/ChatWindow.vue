@@ -1,6 +1,10 @@
 <template>
     <div class="flex h-full flex-1 flex-col">
-        <ChatHeader :username="chat?.data.username" :chatId="chat?.data.id" />
+        <ChatHeader
+            :username="chat?.data.username"
+            :chatId="chat?.data.id"
+            :isOnline="chat?.data.isOnline"
+        />
         <ChatMessages
             :messages="chat?.data.relationships.messages"
             :chatId="chat?.data.id"
@@ -16,6 +20,11 @@ import ChatMessageInput from "./ChatMessageInput.vue";
 import ChatMessages from "./ChatMessages.vue";
 import { onMounted } from "vue";
 
+type user = {
+    id: number;
+    username: string;
+};
+
 const props = defineProps({
     chat: Object,
 });
@@ -27,8 +36,17 @@ const { channel } = useEchoPresence(
 );
 
 onMounted(() => {
-    channel().here((users) => {
-        console.log(users);
-    });
+    channel()
+        .here((users: user[]) => {
+            users.forEach((user) => {
+                console.log(user.username);
+            });
+        })
+        .joining((user: user) => {
+            console.log("joined: ", user);
+        })
+        .leaving((user: user) => {
+            console.log("leaving: ", user);
+        });
 });
 </script>

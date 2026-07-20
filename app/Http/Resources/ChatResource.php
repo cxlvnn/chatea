@@ -19,6 +19,7 @@ class ChatResource extends JsonResource
         return [
             'id' => $this->id,
             'username' => $user->username,
+            'isOnline' => $user->isOnline(),
 
             'relationships' => [
                 'messages' => MessageResource::collection($this->messages()->with('sender')->get()),
