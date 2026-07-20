@@ -14,20 +14,17 @@
 </template>
 
 <script setup lang="ts">
-import { useEchoPresence } from "@laravel/echo-vue";
 import ChatHeader from "./ChatHeader.vue";
 import ChatMessageInput from "./ChatMessageInput.vue";
 import ChatMessages from "./ChatMessages.vue";
-import { onMounted } from "vue";
+/* import { onMounted } from "vue";
+import { useEchoPresence } from "@laravel/echo-vue";
 
 type user = {
     id: number;
     username: string;
 };
 
-const props = defineProps({
-    chat: Object,
-});
 
 const { channel } = useEchoPresence(
     `room.${props.chat?.data.id}`,
@@ -48,5 +45,10 @@ onMounted(() => {
         .leaving((user: user) => {
             console.log("leaving: ", user);
         });
+});
+*/
+
+const props = defineProps({
+    chat: Object,
 });
 </script>

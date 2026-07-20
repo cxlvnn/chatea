@@ -46,7 +46,7 @@ class User extends Authenticatable
     {
         $chat = Chat::findOrFail($chatId);
 
-        return $this->id === $chat->user1_id or $this->id === $chat->user2_id;
+        return $this->id === $chat->user1_id || $this->id === $chat->user2_id;
     }
 
     public function isOnline(): bool

@@ -64,6 +64,7 @@ const page = usePage<{
             id: number;
             username: string;
             initial: string;
+            isOnline: boolean;
             relationships: {
                 lastMessage: string;
                 lastMessageAt: string;
