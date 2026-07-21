@@ -9,7 +9,7 @@
 import AppSidebar from "@/components/AppSidebar.vue";
 import { usePage } from "@inertiajs/vue3";
 import { useEcho, useEchoPresence } from "@laravel/echo-vue";
-import { ref } from "vue";
+import { provide, ref } from "vue";
 import { onMounted } from "vue";
 
 type user = {
@@ -37,22 +37,24 @@ const page = usePage<{
 }>();
 
 const { channel } = useEchoPresence(`online`, "", () => {});
-const onlineUsersId = ref(new Set<number>());
+const onlineUsersId = ref<Set<number>>(new Set());
 
 onMounted(() => {
     channel()
         .here((users: user[]) => {
             users.forEach((user) => {
-                onlineUsersId.value.add(user.id);
+                onlineUsersId.value = new Set(onlineUsersId.value.add(user.id));
             });
         })
         .joining((user: user) => {
-            onlineUsersId.value.add(user.id);
+            onlineUsersId.value = new Set(onlineUsersId.value.add(user.id));
         })
         .leaving((user: user) => {
             onlineUsersId.value.delete(user.id);
         });
 });
+
+provide("onlineUsersId", onlineUsersId);
 
 useEcho(`user.${props.auth.user.id}`, ".chat.created", (e) => {
     page.props.chats.data.push(e.chat);

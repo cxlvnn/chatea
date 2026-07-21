@@ -7,7 +7,7 @@
                 username
             }}</span>
             <span class="text-[10px] text-muted-foreground">{{
-                isOnline ? "online" : "offline"
+                onlineStatus
             }}</span>
         </div>
         <Link :href="`/chats/${chatId}`" method="delete">
@@ -22,10 +22,16 @@
 import { Link } from "@inertiajs/vue3";
 import IconDelete from "./IconDelete.vue";
 import Button from "./ui/button/Button.vue";
+import { computed, inject } from "vue";
 
 const props = defineProps({
     username: String,
     chatId: Number,
-    isOnline: Boolean,
+    otherUserId: Number,
+});
+
+const onlineUsersId = inject("onlineUsersId");
+const onlineStatus = computed(() => {
+    return onlineUsersId.value.has(props.otherUserId) ? "online" : "offline";
 });
 </script>
