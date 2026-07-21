@@ -14,13 +14,9 @@ Broadcast::channel('user.{userId}', function (User $user, $userId) {
     return $user->id == $userId;
 });
 
-Broadcast::channel('room.{roomId}', function (User $user, $roomId) {
-    if ($user->canJoinRoom($roomId)) {
-        return [
-            'id' => $user->id,
-            'username' => $user->username,
-        ];
-    } else {
-        return ['message' => 'Not Found'];
-    }
+Broadcast::channel('online', function (User $user) {
+    return [
+        'id' => $user->id,
+        'username' => $user->username,
+    ];
 });

@@ -41,6 +41,7 @@ class ChatsResource extends JsonResource
             'username' => $user->username,
             'initial' => $user->username[0],
             'isOnline' => $user->isOnline(),
+            'otherUserId' => $user->id,
 
             'relationships' => [
                 'lastMessage' => $last_message ? $last_message->content : null,
