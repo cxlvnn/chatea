@@ -43,11 +43,11 @@ onMounted(() => {
     channel()
         .here((users: user[]) => {
             users.forEach((user) => {
-                onlineUsersId.value = new Set(onlineUsersId.value.add(user.id));
+                onlineUsersId.value.add(user.id);
             });
         })
         .joining((user: user) => {
-            onlineUsersId.value = new Set(onlineUsersId.value.add(user.id));
+            onlineUsersId.value.add(user.id);
         })
         .leaving((user: user) => {
             onlineUsersId.value.delete(user.id);
