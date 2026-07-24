@@ -40,7 +40,6 @@ class ChatsResource extends JsonResource
             'id' => $this->id,
             'username' => $user->username,
             'initial' => $user->username[0],
-            'isOnline' => $user->isOnline(),
             'otherUserId' => $user->id,
 
             'relationships' => [

@@ -13,10 +13,18 @@
                         class="cursor-pointer py-3"
                         @click="activeIndex = chat.id"
                     >
-                        <ItemMedia variant="icon" class="mx-1">
+                        <ItemMedia variant="icon" class="mx-1 outline p-2">
                             <span class="text-xs font-bold uppercase">{{
                                 chat.initial
                             }}</span>
+                            <span
+                                :class="
+                                    onlineUsersId.has(chat.otherUserId)
+                                        ? ['text-green-500']
+                                        : ['text-gray-500']
+                                "
+                                >&#x25cf;</span
+                            >
                         </ItemMedia>
                         <ItemContent class="gap-0.5">
                             <ItemTitle class="text-foreground">{{
@@ -42,7 +50,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from "vue";
+import { computed, inject, ref } from "vue";
 import {
     Item,
     ItemContent,
@@ -55,6 +63,7 @@ import {
 
 import { Link, router, usePage } from "@inertiajs/vue3";
 import { useEcho } from "@laravel/echo-vue";
+import { onlineUsersIdSetKey } from "@/lib/keys";
 
 const activeIndex = ref(0);
 
@@ -64,7 +73,7 @@ const page = usePage<{
             id: number;
             username: string;
             initial: string;
-            isOnline: boolean;
+            otherUserId: number;
             relationships: {
                 lastMessage: string;
                 lastMessageAt: string;
@@ -86,4 +95,6 @@ useEcho(`user.${page.props.auth.user.id}`, ".chat.deleted", (e) => {
         router.get("/chats");
     }
 });
+
+const onlineUsersId = inject(onlineUsersIdSetKey)!;
 </script>

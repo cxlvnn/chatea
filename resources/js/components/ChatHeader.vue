@@ -22,15 +22,16 @@
 import { Link } from "@inertiajs/vue3";
 import IconDelete from "./IconDelete.vue";
 import Button from "./ui/button/Button.vue";
-import { computed, inject } from "vue";
+import { computed, inject, ref } from "vue";
+import { onlineUsersIdSetKey } from "@/lib/keys";
 
 const props = defineProps({
     username: String,
     chatId: Number,
-    otherUserId: Number,
+    otherUserId: { type: Number, required: true },
 });
 
-const onlineUsersId = inject("onlineUsersId");
+const onlineUsersId = inject(onlineUsersIdSetKey, ref(new Set<number>()));
 const onlineStatus = computed(() => {
     return onlineUsersId.value.has(props.otherUserId) ? "online" : "offline";
 });

@@ -11,6 +11,7 @@ import { usePage } from "@inertiajs/vue3";
 import { useEcho, useEchoPresence } from "@laravel/echo-vue";
 import { provide, ref } from "vue";
 import { onMounted } from "vue";
+import { onlineUsersIdSetKey } from "@/lib/keys.ts";
 
 type user = {
     id: number;
@@ -31,13 +32,13 @@ const page = usePage<{
             id: number;
             username: string;
             initial: string;
-            isOnline: boolean;
+            otherUserId: number;
         }>;
     };
 }>();
 
 const { channel } = useEchoPresence(`online`, "", () => {});
-const onlineUsersId = ref<Set<number>>(new Set());
+const onlineUsersId = ref(new Set<number>());
 
 onMounted(() => {
     channel()
@@ -54,7 +55,7 @@ onMounted(() => {
         });
 });
 
-provide("onlineUsersId", onlineUsersId);
+provide(onlineUsersIdSetKey, onlineUsersId);
 
 useEcho(`user.${props.auth.user.id}`, ".chat.created", (e) => {
     page.props.chats.data.push(e.chat);

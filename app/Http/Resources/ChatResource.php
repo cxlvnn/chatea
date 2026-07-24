@@ -19,7 +19,6 @@ class ChatResource extends JsonResource
         return [
             'id' => $this->id,
             'username' => $user->username,
-            'isOnline' => $user->isOnline(),
             'otherUserId' => $user->id,
 
             'relationships' => [

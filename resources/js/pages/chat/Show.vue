@@ -15,7 +15,6 @@ const props = defineProps<{
         data: {
             id: number;
             username: string;
-            isOnline: boolean;
             otherUserId: number;
             relationships: [
                 messages: {
