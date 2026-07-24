@@ -40,11 +40,4 @@ class User extends Authenticatable
     {
         return $this->hasMany(Message::class);
     }
-
-    public function canJoinRoom($chatId): bool
-    {
-        $chat = Chat::findOrFail($chatId);
-
-        return $this->id === $chat->user1_id || $this->id === $chat->user2_id;
-    }
 }
