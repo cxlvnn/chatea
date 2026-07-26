@@ -98,13 +98,31 @@ const props = defineProps<{
 
 const page = usePage<{
     auth: { user: { id: number; username: string } };
+    chats: {
+        data: Array<{
+            id: number;
+            username: string;
+            initial: string;
+            otherUserId: number;
+            relationships: {
+                lastMessage: string;
+                lastMessageAt: string;
+            };
+        }>;
+    };
 }>();
+
+let chat = page.props.chats.data.find((chat) => chat.id === props.chatId);
 
 const currentUserId = page.props.auth.user.id;
 
 useEcho(`chat.${props.chatId}`, ".message.sent", (e) => {
     e.message.sent = e.message.senderId === currentUserId;
     props.messages.push(e.message);
+    if (chat) {
+        chat.relationships.lastMessage = e.message.content;
+        chat.relationships.lastMessageAt = e.message.time;
+    }
 });
 
 useEcho(`chat.${props.chatId}`, ".message.deleted", (e) => {
