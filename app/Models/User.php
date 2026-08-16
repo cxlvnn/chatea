@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Attributes\Hidden;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Support\Facades\Auth;
 
 #[Fillable(['username', 'password'])]
 #[Hidden(['password', 'remember_token'])]
@@ -33,7 +34,9 @@ class User extends Authenticatable
 
     public function chats(): HasMany
     {
-        return $this->hasMany(Chat::class, 'user1_id')->orWhere('user2_id', $this->id);
+        $user_id = Auth::id();
+
+        return $this->hasMany(Chat::class, $user_id);
     }
 
     public function messages(): HasMany
