@@ -28,6 +28,7 @@ class AuthController extends Controller
     {
         $user = User::create($request->validated());
 
+        $request->session()->regenerate();
         Auth::login($user);
         $user->last_seen_at = now();
         $user->save();
@@ -53,6 +54,7 @@ class AuthController extends Controller
     public function logout()
     {
         $user = request()->user();
+        request()->session()->flush();
         Auth::logout();
 
         $user->last_seen_at = null;
