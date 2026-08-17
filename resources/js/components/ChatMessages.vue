@@ -80,7 +80,7 @@
 import { Form, useHttp, usePage } from "@inertiajs/vue3";
 import IconEdit from "./IconEdit.vue";
 import Button from "./ui/button/Button.vue";
-import { nextTick, onMounted, ref, watch } from "vue";
+import { computed, nextTick, onMounted, ref, watch } from "vue";
 import Input from "./ui/input/Input.vue";
 import IconDelete from "./IconDelete.vue";
 import { useEcho } from "@laravel/echo-vue";
@@ -112,7 +112,9 @@ const page = usePage<{
     };
 }>();
 
-let chat = page.props.chats.data.find((chat) => chat.id === props.chatId);
+const chats = computed(() => page.props.chats.data);
+
+let chat = chats.value.find((chat) => chat.id === props.chatId);
 
 const currentUserId = page.props.auth.user.id;
 

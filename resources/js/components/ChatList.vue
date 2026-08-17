@@ -75,8 +75,8 @@ const page = usePage<{
             initial: string;
             otherUserId: number;
             relationships: {
-                lastMessage: string;
-                lastMessageAt: string;
+                lastMessage: string | null;
+                lastMessageAt: string | null;
             };
         }>;
     };
@@ -94,6 +94,19 @@ useEcho(`user.${page.props.auth.user.id}`, ".chat.deleted", (e) => {
         page.props.chats.data.splice(index, 1);
         router.get("/chats");
     }
+});
+
+useEcho(`user.${page.props.auth.user.id}`, ".chat.created", (e) => {
+    const currentUserId = page.props.auth.user.id;
+    const otherUser = e.user1.id === currentUserId ? e.user2 : e.user1;
+
+    page.props.chats.data.push({
+        id: e.id,
+        username: otherUser.username,
+        initial: otherUser.username[0],
+        otherUserId: otherUser.id,
+        relationships: { lastMessage: null, lastMessageAt: null },
+    });
 });
 
 const onlineUsersId = inject(onlineUsersIdSetKey)!;

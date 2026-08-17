@@ -7,8 +7,7 @@
 
 <script setup lang="ts">
 import AppSidebar from "@/components/AppSidebar.vue";
-import { usePage } from "@inertiajs/vue3";
-import { useEcho, useEchoPresence } from "@laravel/echo-vue";
+import { useEchoPresence } from "@laravel/echo-vue";
 import { provide, ref } from "vue";
 import { onMounted } from "vue";
 import { onlineUsersIdSetKey } from "@/lib/keys.ts";
@@ -23,17 +22,6 @@ const props = defineProps<{
         user: {
             id: number;
         };
-    };
-}>();
-
-const page = usePage<{
-    chats: {
-        data: Array<{
-            id: number;
-            username: string;
-            initial: string;
-            otherUserId: number;
-        }>;
     };
 }>();
 
@@ -56,8 +44,4 @@ onMounted(() => {
 });
 
 provide(onlineUsersIdSetKey, onlineUsersId);
-
-useEcho(`user.${props.auth.user.id}`, ".chat.created", (e) => {
-    page.props.chats.data.push(e.chat);
-});
 </script>
