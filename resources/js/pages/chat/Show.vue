@@ -16,14 +16,14 @@ const props = defineProps<{
             id: number;
             username: string;
             otherUserId: number;
-            relationships: [
+            relationships: {
                 messages: {
                     id: number;
                     content: string;
                     time: string;
                     sent: boolean;
-                },
-            ];
+                };
+            };
         };
     };
 }>();

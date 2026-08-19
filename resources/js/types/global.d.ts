@@ -8,7 +8,9 @@ declare module "@inertiajs/core" {
                     id: number;
                     username: string;
                     initial: string;
-                    relationships: { lastMessage: string };
+                    relationships: {
+                        lastMessage: string;
+                    };
                 }>;
             }>;
             appName: string;
